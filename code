@@ -1,5 +1,5 @@
 #include <LiquidCrystal.h>
-int rs = 9, en=10, d4=11, d5=12, d6=13,d7=8; //setup for the lcd
+int rs = 9, en=10, d4=11, d5=12, d6=13,d7=8;
 LiquidCrystal lcd(rs,en,d4,d5,d6,d7);
 int runtimes =0;
 int hours=5;
@@ -23,15 +23,15 @@ void setup() {
   pinMode(7,INPUT); //reads right button
   pinMode(4,INPUT); //left button
   lcd.begin(16,2);
-  
+  // put your setup code here, to run once:
 Serial.begin(9600);
   
-lcd.print("enter alm time");
+lcd.print("enter alarm time");
 // starts off 
 }
 void loop() {
   
-  if(digitalRead(6)==0){
+  if(digitalRead(6)==1){
     delay(150);
 almhrs++;
 if(almhrs!=13){
@@ -66,7 +66,7 @@ alm = String(almhrs)+":";
 lcd.print(alm);
 }
   }
-if(digitalRead(7)==0){
+if(digitalRead(7)==1){
   delay(150);
   almmins++;
   if(almmins!=60){
@@ -84,7 +84,7 @@ alm = String(almhrs)+":";
  alm.concat(almAMPM);
 lcd.print(alm);
 }}
-if(digitalRead(4)==0){
+if(digitalRead(4)==1){
   thing=true;
   }
   if(thing==true){
