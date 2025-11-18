@@ -1,0 +1,140 @@
+#include <LiquidCrystal.h>
+int rs = 9, en=10, d4=11, d5=12, d6=13,d7=8; //setup for the lcd
+LiquidCrystal lcd(rs,en,d4,d5,d6,d7);
+int runtimes =0;
+int hours=5;
+String zero ="0";
+String hrs="";
+String mins="";
+int minutes=45-1;
+bool isAM=false;
+String ampm="";
+String hrmin="";
+String display= "";
+int almhrs=0;
+int almmins=0;
+String alm ="";
+String almAMPM="";
+bool almisAM = true;
+bool thing = false;
+void setup() {
+  pinMode(5,OUTPUT); //buzzer
+  pinMode(6,INPUT); //reads middle button
+  pinMode(7,INPUT); //reads right button
+  pinMode(4,INPUT); //left button
+  lcd.begin(16,2);
+  
+Serial.begin(9600);
+  
+lcd.print("enter alm time");
+// starts off 
+}
+void loop() {
+  
+  if(digitalRead(6)==0){
+    delay(150);
+almhrs++;
+if(almhrs!=13){
+  
+  if(almhrs==12){
+    if(almisAM==false){
+    almisAM=true;
+    }
+   else if(almisAM==true){
+      almisAM=false;
+    }
+    }
+  if(almisAM==true){
+    almAMPM= "AM";
+  }
+  else if(almisAM==false){
+    almAMPM="PM";
+  }
+  else{}
+lcd.clear();
+ alm = String(almhrs)+":";
+ alm.concat(String(almmins));
+ alm.concat(almAMPM);
+lcd.print(alm);
+}
+else{
+almhrs=1;
+lcd.clear();
+alm = String(almhrs)+":";
+ alm.concat(String(almmins));
+ alm.concat(almAMPM);
+lcd.print(alm);
+}
+  }
+if(digitalRead(7)==0){
+  delay(150);
+  almmins++;
+  if(almmins!=60){
+     lcd.clear();
+alm = String(almhrs)+":";
+ alm.concat(String(almmins));
+ alm.concat(almAMPM);
+lcd.print(alm);
+  }
+  else{
+ almmins=0;
+ lcd.clear();
+alm = String(almhrs)+":";
+ alm.concat(String(almmins));
+ alm.concat(almAMPM);
+lcd.print(alm);
+}}
+if(digitalRead(4)==0){
+  thing=true;
+  }
+  if(thing==true){
+//delay(59971);
+minutes++;
+
+if(minutes==60){
+hours++;
+minutes=0;
+}
+if(hours==12&& minutes==0 ){
+ if(isAM==false){
+  isAM=true;
+ } 
+ else if(isAM==true){
+  isAM=false;
+ }
+
+}
+if(hours==13){
+  hours=1;
+}
+
+
+if(isAM==true){
+  ampm="AM";
+}
+else if(isAM==false){
+  ampm="PM";
+}
+if(almhrs == hours && almmins ==minutes && almisAM == isAM){
+digitalWrite(5,HIGH);
+} 
+if(minutes<10){
+  mins = String(zero+minutes);
+}
+else{
+  mins=String(minutes);
+}
+hrs= String(hours)+":";
+
+hrs.concat(mins);
+hrmin= hrs;
+hrmin.concat(ampm);
+display = hrmin;
+lcd.clear();
+lcd.print(display);
+delay(59971);
+  
+
+}
+else{}
+}
