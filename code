@@ -117,6 +117,8 @@ else if(isAM==false){
 }
 if(almhrs == hours && almmins ==minutes && almisAM == isAM){
 digitalWrite(5,HIGH);
+delay(59971);
+digitalWrite(5,LOW);// changed so it turns off
 } 
 if(minutes<10){
   mins = String(zero+minutes);
